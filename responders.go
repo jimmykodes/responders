@@ -11,12 +11,12 @@ type ErrorResponse struct {
 }
 
 func Respond(w http.ResponseWriter, body any, code int) {
+	w.WriteHeader(code)
 	if body != nil {
 		if err := json.NewEncoder(w).Encode(body); err != nil {
 			slog.Error("error writing body", slog.String("error", err.Error()))
 		}
 	}
-	w.WriteHeader(code)
 }
 
 func OK(w http.ResponseWriter, body any) {
