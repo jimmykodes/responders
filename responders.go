@@ -13,6 +13,7 @@ type ErrorResponse struct {
 func Respond(w http.ResponseWriter, body any, code int) {
 	w.WriteHeader(code)
 	if body != nil {
+		w.Header().Add("Content-Type", "application/json")
 		if err := json.NewEncoder(w).Encode(body); err != nil {
 			slog.Error("error writing body", slog.String("error", err.Error()))
 		}
